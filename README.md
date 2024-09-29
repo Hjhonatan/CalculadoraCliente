@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este proyecto es una **calculadora ** que permite al usuario realizar varias operaciones matemáticas básicas y avanzadas. La aplicación se ejecuta en consola y está diseñada usando el lenguaje Java. Entre las funcionalidades incluye: suma, resta, multiplicación, división, potencia y cálculo de raíces cuadradas. Además, guarda un historial de operaciones para su revisión posterior.
+Este proyecto es una calculadora que permite al usuario realizar varias operaciones matemáticas básicas y avanzadas. La aplicación se ejecuta en consola y está diseñada usando el lenguaje Java. Entre las funcionalidades incluye: suma, resta, multiplicación, división, potencia y cálculo de raíces cuadradas. Además, guarda un historial de operaciones para su revisión posterior.
 
 ## Características
 - **Operaciones disponibles:**
