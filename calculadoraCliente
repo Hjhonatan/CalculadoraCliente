@@ -1,0 +1,141 @@
+package calculadoraCliente;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class calculadoraCliente {
+
+    public static void main(String[] args) {
+
+        Scanner entrada = new Scanner(System.in);
+        ArrayList<String> historial = new ArrayList<>();  // Para almacenar el historial de operaciones
+
+        while (true) {
+            // Mostrar el menú de operaciones antes de solicitar los números
+            System.out.println("\nSeleccione la operación:");
+            System.out.println("1. Suma");
+            System.out.println("2. Resta");
+            System.out.println("3. Multiplicación");
+            System.out.println("4. División");
+            System.out.println("5. Potencia (primer número elevado al segundo)");
+            System.out.println("6. Raíz cuadrada (solo del primer número)");
+            System.out.println("7. Ver historial de operaciones");
+            System.out.println("8. Salir");
+
+            int opcion = entrada.nextInt();
+
+            if (opcion == 8) {
+                System.out.println("Gracias por utilizar la calculadora. ¡Hasta luego!");
+                break;
+            }
+
+            double numero1 = 0, numero2 = 0;
+            boolean entradaValida = false;
+
+            // Si la opción seleccionada no es ver historial, solicitamos los números
+            if (opcion != 7 && opcion != 6) {
+                // Capturar el primer número con validación
+                while (!entradaValida) {
+                    try {
+                        System.out.println("Ingrese el primer número:");
+                        numero1 = entrada.nextDouble();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: Entrada no válida. Ingrese un número válido.");
+                        entrada.next(); // Limpiar el buffer
+                    }
+                }
+
+                entradaValida = false;
+
+                // Capturar el segundo número solo si no es una operación que requiere un solo número
+                if (opcion != 6) {
+                    while (!entradaValida) {
+                        try {
+                            System.out.println("Ingrese el segundo número:");
+                            numero2 = entrada.nextDouble();
+                            entradaValida = true;
+                        } catch (InputMismatchException e) {
+                            System.out.println("ERROR: Entrada no válida. Ingrese un número válido.");
+                            entrada.next(); // Limpiar el buffer
+                        }
+                    }
+                }
+            }
+
+            double resultado = 0;
+            String operacion = "";
+
+            switch (opcion) { // Inicia el bloque de selección multiple, dependiendo de la opción elegida por el usuario.
+
+                case 1 -> { // Si la opción es 1, realizar la suma.
+                    resultado = numero1 + numero2; // Suma los dos números ingresados por el usuario.
+                    operacion = numero1 + " + " + numero2 + " = " + resultado; // Guarda la operación y el resultado en una cadena de texto.
+                }
+
+                case 2 -> { // Si la opción es 2, realizar la resta.
+                    resultado = numero1 - numero2; // Resta el segundo número del primero.
+                    operacion = numero1 + " - " + numero2 + " = " + resultado; // Guarda la operación y el resultado en una cadena de texto.
+                }
+
+                case 3 -> { // Si la opción es 3, realizar la multiplicación.
+                    resultado = numero1 * numero2; // Multiplica los dos números ingresados.
+                    operacion = numero1 + " * " + numero2 + " = " + resultado; // Guarda la operación y el resultado en una cadena de texto.
+                }
+
+                case 4 -> { // Si la opción es 4, realizar la división.
+                    if (numero2 != 0) { // Verifica que el segundo número no sea cero para evitar la división por cero.
+                        resultado = numero1 / numero2; // Si es válido, divide el primer número entre el segundo.
+                        operacion = numero1 + " / " + numero2 + " = " + resultado; // Guarda la operación y el resultado en una cadena de texto.
+                    } else { // Si el segundo número es 0, se muestra un mensaje de error.
+                        System.out.println("ERROR: No se puede dividir por cero."); // Mensaje de error por división por cero.
+                        continue; // Salta al siguiente ciclo del bucle sin procesar más en esta iteración.
+                    }
+                }
+
+                case 5 -> { // Si la opción es 5, realizar la potencia.
+                    resultado = Math.pow(numero1, numero2); // Eleva el primer número (base) a la potencia del segundo número (exponente).
+                    operacion = numero1 + " ^ " + numero2 + " = " + resultado; // Guarda la operación y el resultado en una cadena de texto.
+                }
+
+                case 6 -> { // Si la opción es 6, calcular la raíz cuadrada del primer número.
+                    if (numero1 >= 0) { // Verifica que el número no sea negativo, ya que no se puede calcular la raíz cuadrada de un número negativo (sin usar números complejos).
+                        resultado = Math.sqrt(numero1); // Calcula la raíz cuadrada del primer número.
+                        operacion = "√" + numero1 + " = " + resultado; // Guarda la operación y el resultado en una cadena de texto.
+                    } else { // Si el número es negativo, muestra un mensaje de error.
+                        System.out.println("ERROR: No se puede calcular la raíz cuadrada de un número negativo."); // Mensaje de error para números negativos.
+                        continue; // Salta al siguiente ciclo del bucle.
+                    }
+                }
+
+                case 7 -> {
+                    // Mostrar el historial de operaciones
+                    System.out.println("Historial de operaciones:");
+                    if (historial.isEmpty()) {
+                        System.out.println("No hay operaciones en el historial.");
+                    } else {
+                        for (String op : historial) {
+                            System.out.println(op);
+                        }
+                    }
+                    continue;
+                }
+                default -> {
+                    System.out.println("ERROR: Opción no válida.");
+                    continue;
+                }
+            }
+
+            // Guardar la operación en el historial y mostrar el resultado
+            if (!operacion.isEmpty()) {
+                historial.add(operacion);
+                System.out.println("El resultado es: " + resultado);
+            }
+
+            // Separador para mejorar la visualización
+            System.out.println(
+                    "--------------------------------------------------\n");
+        }
+    }
+}
